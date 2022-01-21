@@ -1,5 +1,6 @@
 from email import message
 from typing_extensions import Required
+from urllib import response
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse, abort
 
@@ -42,6 +43,48 @@ class CountryController(Resource):
         return '',204
 
 api.add_resource(CountryController, "/country/<int:country_id>")
+
+class CountryControllerByCountryName(Resource):
+
+    def get(self, country_name):
+        for x in countries:
+            if countries[x].name == country_name:
+                response = countries[x]
+        return response
+
+api.add_resource(CountryControllerByCountryName, "/country/name/<string:country_name>")
+
+class CountryControllerByAphaCode2(Resource):
+    
+    def get(self, country_alpha2code):
+        for x in countries:
+            if countries[x].alpha2code == country_alpha2code:
+                response = countries[x]
+        return response
+
+api.add_resource(CountryControllerByAphaCode2, "/country/alphacode/2/<string:country_alpha2code>")
+
+
+class CountryControllerByAphaCode3(Resource):
+    
+    def get(self, country_alpha3code):
+        for x in countries:
+            if countries[x].alpha3code == country_alpha3code:
+                response = countries[x]
+        
+        return response
+
+api.add_resource(CountryControllerByAphaCode3, "/country/alphacode/3/<string:country_alpha3code>")
+
+class CountryControllerByCurrency(Resource):
+    
+    def get(self, country_currency):
+        for x in countries:
+            if countries[x].currency == country_currency:
+                response = countries[x]        
+                return response
+
+api.add_resource(CountryControllerByCurrency, "/country/currency/<string:country_currency>")
 
 
 if __name__ == "__main__":
